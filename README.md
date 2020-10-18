@@ -1,92 +1,101 @@
+# initializeWebView메소드
 
-```
-public class MainActivity extends AppCompatActivity {
+## Description 
 
+- 자바스크립트에서 안드로이드 메소드를 인식할 수 있게 설정하는 메소드.
+- 제공된 java객체를 WebView에 삽입합니다.
+            
+## Parameter
 
-     WebView wv;
-    static String tv_sender;
-     String tv_date;
-    static String tv_content;
-     String a;
+- 없음
+    
+## Return
+- type : void
 
+- value : 없음
 
+## Dependence function
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+- getSettings()
+  - WebView 사용 시 현재 WebView의 속성을 Setting으로 변경합니다 
+  - [https://sunful.tistory.com/2]
 
+- addJavascriptInterface: 
+  - 제공된 java객체를 webView에 삽입합니다. 
+  - https://developer.android.com/reference/android/webkit/WebView
 
-        wv=findViewById(R.id.webview);
-        initializeWebView();
+- setClickable(): 
+  - 버튼을 활성화/비활성화시킬 수 있다
 
-        WebSettings settings=wv.getSettings();
-        settings.setJavaScriptEnabled(true);
+- setJavaScriptEnabled(true or falee): 
+  - javascript 실행여부
 
-        wv.setWebViewClient(new WebViewClient());
-        wv.setWebChromeClient(new WebChromeClient());
-        wv.loadUrl("file:///android_asset/index.html");
+- setJavaScriptCanOpenWindowsAutomatically(true or false): 
+  - javascript에서 window.open()사용가능 여부
 
+- setAllowUniversalAccessFromFileURLs(true or false):
+  - 파일 체계 URL의 컨텍스트에서 원본 간 요청이 다른 파일 체계 URL의 콘텐츠에 액세스 할 수 있도록 허용할지 여부를 설정합니다.
 
-        requirePerms();
+- setAllowFileAccessFromFileURLs(true or false): 
+  - 파일 체계 URL의 컨텍스트에서 원본 간 요청이 다른 파일 체계 
+  - URL의 콘텐츠에 액세스 할 수 있도록 허용할지 여부를 설정합니다.
 
+- setBuiltInZoomControls(true or false): 
+  - WebView가 내장 된 확대 / 축소 메커니즘을 사용해야하는지 여부를 설정합니다.
 
+- setSupportZoom(true or false): 
+  - WebView가 화면 확대 / 축소 컨트롤 및 제스처를 사용하여 확대 / 축소를 지원해야하는지 여부를 설정합니다.
 
-    }
+- setLightTouchEnabled(true or false): 
+  - 가벼운 터치를 사용하여 선택하고 마우스 오버를 활성화 할 수 있습니다.
 
+- setDomStorageEnabled(true or false): 
+  - DOM 저장소 API 사용 여부를 설정합니다.
 
+- setPluginState(WebSettings.PluginState state): 
+  - WebView에 요청시 플러그인을 활성화, 비활성화 또는 포함하도록 지시합니다
 
-    private void sendSMS(String phoneNumber,String message){
-        SmsManager smsManager= SmsManager.getDefault();
-        smsManager.sendTextMessage(phoneNumber,null,message,null,null);
+- setLoadWithOverviewMode(true or false):
+  - WebView가 개요 모드에서 페이지를로드할지 여부를 설정합니다.즉, 콘텐츠를 너비별로 화면에 맞게 축소합니다.
 
-    }
-    public void ShowSMS(Intent intent) {
+- setUseWideViewPort(true or false):
+  - WebView가 "viewport"HTML 메타 태그에 대한 지원을 활성화해야하는지 아니면 와이드 뷰포트를 사용해야하는지 여부를 설정합니다.
 
-        if (intent != null) {
-            String  sender = intent.getStringExtra("sender");
-            String date = intent.getStringExtra("date");
-            String content = intent.getStringExtra("content");
+- setRenderPriority( WebSettings.RenderPriority): 
+  - 렌더 스레드의 우선 순위를 설정합니다.
 
-
-            tv_sender = sender;
-            tv_content = content;
-
-            Toast.makeText(getApplicationContext(),tv_content,Toast.LENGTH_SHORT).show();
-
-            SMS();
-
-        }
-
-    }
-
-
-
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        ShowSMS(intent);
-    }
-
+- setCacheMode(int mode): 
+  - 캐시가 사용되는 방식을 재정의합니다. 
+  - https://developer.android.com/reference/android/webkit/WebSettings#setPluginState(android.webkit.WebSettings.PluginState)
 
 
+- setWebViewClient(): 
+  - 다양한 알림과 요청을받을 WebViewClient를 설정합니다. 
 
-    private void requirePerms(){
-        String[] permissions={Manifest.permission.RECEIVE_SMS};
-        int permissionCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.RECEIVE_SMS);
-        if(permissionCheck== PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(this,permissions,1);
+- onPageStarted(): 
+  - WebView에서 처음 한 번만 호출되는 메소드, 페이지 로딩이 시작된 것을 알립니다. 
 
-        }
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
+- onPageFinished():
+  - WebView에서 처음 한 번만 호출되는 메소드, 페이지 로딩이 완료된 것을 알립니다.
 
-    }
+- shouldOverrideUrlLoading(): 
+  - 새로운 URL이 현재 WebView에 로드되려고 할 때 호스트 응용 프로그램에게 컨트롤을 대신할 기회를 줍니다
+
+- onReceivedSslError():
+  - SSL 오류를 무시할 때 쓰는 코드>https://aorica.tistory.com/103
+
+- onReceivedError(): 
+  - 호스트 응용 프로그램에게 오류를 보고합니다.
+  - http://ankyu.entersoft.kr/lecture/android/webview_02.asp
+    
+## Source code    
+    
+    ```
     @SuppressLint("JavascriptInterface")
     public void initializeWebView() {
         WebSettings webSettings = wv.getSettings();
 
-        wv.addJavascriptInterface(new MainActivity(), "AndroidDevice");
+        wv.addJavascriptInterface(new WebVCamBridgeInterface(), "AndroidDevice");
         wv.setClickable(true);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -135,17 +144,31 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+    ```
+    
+# SMS()메소드
 
-    @JavascriptInterface
-    public void ShowSMS2 () {
+## Description 
 
-        sendSMS("01039750810", "4567");
+- 안드로이드에서 자바스크립트 함수 실행
 
+## Parameter
 
+- 없음
+    
+## Return
+- type : void
 
+- value : 없음
 
-    }
-    public void SMS(){
+## Dependence function
+
+- load.url(): 안드로이드에서 SMS메소드가 실행되면wv.loadurl("javascript:(function(){}문구가 안에 있는 Javascript 코드를 실행시킨다.
+
+## Source code
+
+```
+public void SMS(){
 
         a = "전화번호" +tv_sender + "인증번호" + tv_content;
         wv.post(new Runnable() {
@@ -157,38 +180,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-}
 ```
+    
 
-onCreate메소드에서 wv변수에 webView 를 연결해주고 자바스크립트랑 크롬에서도 켜질 수 있게 설정합니다
+# Javascript코드    
 
-```
- wv=findViewById(R.id.webview);
-        initializeWebView();
+## Description 
 
-        WebSettings settings=wv.getSettings();
-        settings.setJavaScriptEnabled(true);
+- 자바스크립트에서 안드로이드 메소드를 호출
+            
 
-        wv.setWebViewClient(new WebViewClient());
-        wv.setWebChromeClient(new WebChromeClient());
-        wv.loadUrl("file:///android_asset/index.html");
+## Dependence function
 
+- ShowSMS2():SendSms메소드 호출
+  - https://github.com/jun-seok816/junseok-android
 
-        requirePerms();
-```
-
-initializeWebView()메소드는  @SuppressLint("JavascriptInterface")를 사용하여 전에 앱과 같이 
-
-```
-  wv.addJavascriptInterface(new MainActivity(), "AndroidDevice");
-        wv.setClickable(true);
-```
-js에서 안드로이드 함수를 호출 할 수 있게 한다.
-
-js 코드
-======
+## Source code 
 
 ```
 var e = document.getElementById('aa');
@@ -197,242 +204,7 @@ var e = document.getElementById('aa');
     AndroidDevice.ShowSMS2 ();
     
 ```
-안드로이드 함수
-===
-
-```
-@JavascriptInterface
-    public void ShowSMS2 () {
-
-        sendSMS("01039750810", "4567");
-        }
-```        
-
-다음은 가장 중요한 필자가 많이 스트레스 받은 안드로이드에서 js함수를 호출하는 형식이다
-
-```
-public void SMS(){
-
-        a = "전화번호" +tv_sender + "인증번호" + tv_content;
-        wv.post(new Runnable() {
-            @Override
-            public void run() {
-                    wv.loadUrl("javascript:(function() { "
-                            + "document.getElementById('aa').innerHTML = '"+a+"'; "
-                            + "})()");
-            }
-        });
-    }
-```
-
-안드로이드에서 SMS()함수가 실행되면 wv.loadUrl("javascript:(function()문구가 안에있는 js문구를 실행시킨다.
-
-다시 넘어가서  onCreate메소드 내부에 있는 requirePerms()메소드를 확인해보면
-
-```
- private void requirePerms(){
-        String[] permissions={Manifest.permission.RECEIVE_SMS};
-        int permissionCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.RECEIVE_SMS);
-        if(permissionCheck== PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(this,permissions,1);
-
-        }
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
-
-    }
-```
-permissions 배열에 매니페스트에 추가한 SMS에 대한 권한들을 추가 
-ContextCompat.checkSelfPermission()를 사용해 사용자가 이미 앱에 특정 권한을 부여했는지 확인합니다
-이 메소드는 PERMISSION_GRANTED 또는 PERMISSION_DENIED를 반환합니다.
-
-만약 PERMISSION_DENIED를 반환하면  ActivityCompat.requestPermissions(this,permissions,1);을 사용해 
-퍼미션을 요구합니다.
-
-만약 PERMISSION_GRANTED를 반환하면 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
-을 사용해 메세지를 보내는 퍼미션도 요구합니다. 허용을 누르면 정상적으로 퍼미션이 허용됩니다.
-
-Intent
-====
-Intent는 메시징 객체로, 다른 앱 구성 요소로부터 작업을 요청하는 데 사용할 수 있습니다. 
-인텐트가 구성 요소 사이의 통신을 촉진하는 데는 여러 가지 방식이 있지만 기본적인 사용 사례는 크게 세 가지로 나눌 수 있습니다.
-
-그 중 요번에 사용한 것이 브로드캐스트 전달입니다. 
-
-브로드캐스트는 시스템에서 발생합니다. 예컨대 화면이 꺼졌거나 배터리가 부족하거나 사진을 캡처했다고 알리는 브로드캐스트가 대표적입니다.
-상태 표시줄 알림을 생성하여 사용자에게 브로드캐스트 이벤트가 발생했다고 알릴 수 있습니다.
-
-서브클래스인 MyReceiver 입니다.
-
-```
-public class MyReceiver extends BroadcastReceiver {
-
-    private static final String TAG="SMSReceiver";
-
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-
-
-        Log.d(TAG,"onReceive() called");
-
-        Bundle bundle= intent.getExtras();
-        SmsMessage[] messages = parseSmsMessage(bundle);
-
-        if (messages.length>0){
-            String sender= messages[0].getOriginatingAddress();
-            String content= messages[0].getMessageBody().toString();
-            Date date= new Date(messages[0].getTimestampMillis());
-
-            Log.d(TAG,"sender"+sender);
-            Log.d(TAG, "content:"+content);
-            Log.d(TAG, "date"+date);
-
-            sendToActivity(context,sender,content,date);
-        }
-
-    }
-    private SmsMessage[] parseSmsMessage(Bundle bundle){
-        Object[] objs = (Object[])bundle.get("pdus");
-        SmsMessage[] messages = new SmsMessage[objs.length];
-        for (int i= 0; i<objs.length; i++){
-            messages[i] = SmsMessage.createFromPdu((byte[])objs[i]);
-        }return  messages;
-    }
-
-    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    private void sendToActivity(Context context, String sender, String content, Date date){
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                |Intent.FLAG_ACTIVITY_SINGLE_TOP
-                |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("sender", sender);
-        intent.putExtra("content", content);
-        intent.putExtra("date", format.format(date));
-        context.startActivity(intent);
-    }
 
 
 
-}
-```
-브로드캐스트를 상속받았고 onReceive(Context, Intent)를 구현합니다. Bundle bundle= intent.getExtras();
-를 사용하여 데이터를 bundle에 넣어 주시고 messages 배열에 데이터를 추가하여 메세지의 주소, 내용, 번호를 추출합니다.
-
-```
-if (messages.length>0){
-            String sender= messages[0].getOriginatingAddress();
-            String content= messages[0].getMessageBody().toString();
-            Date date= new Date(messages[0].getTimestampMillis());
-
-            Log.d(TAG,"sender"+sender);
-            Log.d(TAG, "content:"+content);
-            Log.d(TAG, "date"+date);
-
-            sendToActivity(context,sender,content,date);
-        }
-```        
-sendToActivity 에 얻어온 번호 , 내용 등을 파라미터로 넘김
-
-```
- private void sendToActivity(Context context, String sender, String content, Date date){
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                |Intent.FLAG_ACTIVITY_SINGLE_TOP
-                |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("sender", sender);
-        intent.putExtra("content", content);
-        intent.putExtra("date", format.format(date));
-        context.startActivity(intent);
-    }
-```
-이 서브클래스는 브로드캐스트를 상속받았기 때문에 메인 액티비티에  Intent를 startActivity()로 전달합니다.
-StartActivity를 호출하면 MainActivity 의 onCreate대신 onNewIntent(Intent intent)가 호출 됩니다.
-
-
-```
- @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        ShowSMS(intent);
-    }
-```
-
-
-
-다시 메인액티비티로 넘어와서 
-```
- private void sendSMS(String phoneNumber,String message){
-        SmsManager smsManager= SmsManager.getDefault();
-        smsManager.sendTextMessage(phoneNumber,null,message,null,null);
-
-    }
     
-    @JavascriptInterface
-    public void ShowSMS2 () {
-
-        sendSMS("01039750810", "4567");
-
-    }
-    
-    
-```
-sendSMS메소드 입니다.
-전에 보냈던 메세지가 설정이 남아있을 수 있기 때문에 getDefault를 사용해 디폴트 세팅값으로 되돌려 놓고
-SmsManager smsManager= SmsManager.getDefault(); sendTextMessage를 사용해 폰 넘버랑 메세지 내용을 발송합니다.
-
-메세지가 발송되면 브로드캐스트가 반응하게 되고 폰 넘버랑 메세지를 인텐트 값으로 받아와
-
-```
- @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        ShowSMS(intent);
-    }
-```
-를 거쳐 ShowSms메소드를 호출합니다.
-
-```
-public void ShowSMS(Intent intent) {
-
-        if (intent != null) {
-            String  sender = intent.getStringExtra("sender");
-            String date = intent.getStringExtra("date");
-            String content = intent.getStringExtra("content");
-
-
-            tv_sender = sender;
-            tv_content = content;
-
-            Toast.makeText(getApplicationContext(),tv_content,Toast.LENGTH_SHORT).show();
-
-            SMS();
-
-        }
-
-    }
-```
-이 ShowSMS는 받아온 인텐트 값을 토스트로 띄워주고, SMS()함수를 호출하여 js를 조작해 웹페이지에 전번이랑, 인증번호를 
-띄우고 어플리케이션은 종료됩니다.
-
-```
-public void SMS(){
-
-        a = "전화번호" +tv_sender + "인증번호" + tv_content;
-        wv.post(new Runnable() {
-            @Override
-            public void run() {
-                    wv.loadUrl("javascript:(function() { "
-                            + "document.getElementById('aa').innerHTML = '"+a+"'; "
-                            + "})()");
-            }
-        });
-    }
-```
-
-
-
-
-
-
-
