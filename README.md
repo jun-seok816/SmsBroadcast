@@ -146,11 +146,32 @@
     }
     ```
     
+# ShowSMS2()메소드
+## Description 
+
+- 자바스크립트에서 실행시키는 안드로이드함수
+
+## Parameter
+
+- 없음
+
+## Return
+- type : void
+
+- value : 없음
+
+```
+ @JavascriptInterface
+    public void ShowSMS2 () {
+        sendSMS("01039750810", "4567");
+        }
+```
+    
 # SMS()메소드
 
 ## Description 
 
-- 안드로이드에서 자바스크립트 함수 실행
+- 안드로이드에서 실행시키는 자바스크립트함수
 
 ## Parameter
 
