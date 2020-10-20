@@ -232,7 +232,8 @@ var e = document.getElementById('aa');
 - addJavascriptInterface 메소드를 webview에 삽입된 자바객체에서 안드로이드 메소드를 호출하는 모습
   - AndroidDevice.ShowSMS2();
 - 이때 호출되는 안드로이드 메소드에는 @JavascriptInterface객체가 달려있어야 호출 할 수 있다.
-- 반대로 안드로이드에서 자바스크립트 함수를 호출시키기 위해서는 WebView와 Android는 비동기 상태 이므로 쓰레드로 넣어 전달해 주어야 한다. 
+- 반대로 안드로이드에서 자바스크립트 함수를 호출시키기 위해서는 WebView와 Android는 비동기 상태 이므로 쓰레드로 넣어 전달해 주어야 한다.
+  - https://developer.android.com/reference/java/lang/Thread
   - https://nicgoon.tistory.com/192
 
 
